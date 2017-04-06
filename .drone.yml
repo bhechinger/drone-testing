@@ -5,8 +5,9 @@ pipeline:
       - export GOPATH=/drone
       - export PATH=$PATH:$GOPATH/bin
       - go get -t -v ./...
-      - go get github.com/mattn/goveralls
-      - goveralls -service=drone.io -repotoken=${REPOTOKEN}
+      - go run main.go
+      # - go get github.com/mattn/goveralls
+      # - goveralls -service=drone.io -repotoken=${REPOTOKEN}
 
 services:
   postgres:
