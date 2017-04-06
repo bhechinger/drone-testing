@@ -17,9 +17,14 @@ func doit() {
 		fmt.Println("Error Opening!")
 	}
 
-	if err := db.Ping(); err != nil {
-		fmt.Printf("Error pinging db: %s\n", err)
-	} else {
-		fmt.Println("It works!")
+	escape := false
+	for try := 0; escape == true; try++ {
+		if err := db.Ping(); err != nil {
+			fmt.Printf("Error pinging db: %s\n", err)
+		} else {
+			fmt.Println("It works!")
+			escape = true
+		}
+		fmt.Println(try)
 	}
 }
