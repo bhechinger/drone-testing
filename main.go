@@ -19,12 +19,12 @@ func doit() {
 
 	escape := false
 	for try := 0; escape == true; try++ {
+		fmt.Println(try)
 		if err := db.Ping(); err != nil {
 			fmt.Printf("Error pinging db: %s\n", err)
 		} else {
 			fmt.Println("It works!")
 			escape = true
 		}
-		fmt.Println(try)
 	}
 }
