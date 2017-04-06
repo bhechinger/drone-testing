@@ -5,6 +5,7 @@ pipeline:
       - export GOPATH=/drone
       - export PATH=$PATH:$GOPATH/bin
       - go get -t -v ./...
+      - sleep 15
       - go run main.go
       # - go get github.com/mattn/goveralls
       # - goveralls -service=drone.io -repotoken=${REPOTOKEN}
