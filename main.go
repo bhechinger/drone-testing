@@ -7,8 +7,12 @@ import (
 )
 
 func main() {
+	doit()
+}
+
+func doit() {
 	db, err := sqlx.Open("postgres",
-		"user=myapp dbname=myapp sslmode=disable")
+		"user=myapp host=localhost dbname=myapp sslmode=disable")
 	if err != nil {
 		fmt.Println("Error Opening!")
 	}

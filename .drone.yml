@@ -7,3 +7,9 @@ pipeline:
       - go get -t -v ./...
       - go get github.com/mattn/goveralls
       - goveralls -service=drone.io -repotoken=${REPOTOKEN}
+
+services:
+  postgres:
+    image: postgres:9.4.5
+    environment:
+      - POSTGRES_USER=myapp
