@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"time"
 )
 
 func main() {
@@ -29,5 +30,6 @@ func doit() {
 			fmt.Println("It works!")
 			break
 		}
+		time.Sleep(1)
 	}
 }
