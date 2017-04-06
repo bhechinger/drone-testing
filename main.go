@@ -30,6 +30,6 @@ func doit() {
 			fmt.Println("It works!")
 			break
 		}
-		time.Sleep(1)
+		time.Sleep(1 * time.Second)
 	}
 }
