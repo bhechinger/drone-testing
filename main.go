@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	_ "github.com/go-sql-driver/mysql"
 	"time"
 	"errors"
 	"database/sql"
@@ -95,7 +96,7 @@ func doit(driver, DSN string) error {
 }
 
 func main() {
-	if err := doit("postgres",
+	if err := doit("mysql",
 		"user=myapp host=localhost password=mysecretpassword dbname=myapp sslmode=disable"); err != nil {
 		fmt.Printf("Something went wrong! %s", err)
 	}
