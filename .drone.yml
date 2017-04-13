@@ -13,22 +13,18 @@ pipeline:
       # - goveralls -service=drone.io -repotoken=${REPOTOKEN}
 
 matrix:
-  mysql:
+  DATABASE:
     - mysql
     - mariadb
-  pgsql:
     - postgres
 
 services:
   postgres:
-    image: ${pgsql}
+    image: ${DATABASE}
     environment:
       - POSTGRES_USER=myapp
       - POSTGRES_DB=myapp
       - POSTGRES_PASSWORD=mysecretpassword
-  mysql:
-    image: ${mysql}
-    environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=myapp
       - MYSQL_USER=myapp
