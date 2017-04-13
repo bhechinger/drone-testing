@@ -95,7 +95,8 @@ func doit(driver, DSN string) error {
 }
 
 func main() {
-	if err := doit("postgres"); err != nil {
+	if err := doit("postgres",
+		"user=myapp host=localhost password=mysecretpassword dbname=myapp sslmode=disable"); err != nil {
 		fmt.Printf("Something went wrong! %s", err)
 	}
 }
