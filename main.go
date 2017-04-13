@@ -41,32 +41,61 @@ func (db *DBInfo) Ping(timeout int) error {
 	}
 }
 
-func main() {
+func doit(driver string) error {
 	var err error
 	var result sql.Result
 
 	db := DBInfo{}
-	err = db.Init("postgres", "user=myapp host=localhost password=mysecretpassword dbname=myapp sslmode=disable")
+	err = db.Init(driver, "user=myapp host=localhost password=mysecretpassword dbname=myapp sslmode=disable")
 	if err != nil {
-		fmt.Printf("db.Init failed: %s", err)
+		return fmt.Errorf("db.Init failed: %s", err)
 	}
 
 	err = db.Ping(15)
 	if err != nil {
-		fmt.Printf("db.Ping failed: %s", err)
-	} else {
-		fmt.Println("Ping!")
+		return fmt.Errorf("db.Ping failed: %s", err)
 	}
 
-	schema := `CREATE TABLE place (
+	schema := `CREATE TABLE IF NOT EXISTS place (
 		country text,
 		city text NULL,
 		telcode integer);`
 
 	result, err = db.Conn.Exec(schema)
-	if err == nil {
-		fmt.Printf("CREATE SCHEMA: %s", result)
-	} else {
-		fmt.Printf("ERROR :: CREATE SCHEMA: %s", err)
+	if err != nil {
+		return fmt.Errorf("CREATE SCHEMA ERROR: %s", err)
+	}
+	fmt.Printf("CREATE SCHEMA: %v\n", result)
+
+	var query string
+	query = `INSERT INTO place VALUES ('USA', 'Atlatla', 404)`
+	result, err = db.Conn.Exec(query)
+	if err != nil {
+		return fmt.Errorf("INSERT ERROR: %s", err)
+	}
+	rows_a, err := result.RowsAffected()
+	if err != nil {
+		return fmt.Errorf("RowsAffected() ERROR: %s", err)
+	}
+	fmt.Printf("Rows inserted: %v\n", rows_a)
+
+	type Place struct {
+		Country       string
+		City          sql.NullString
+		TelephoneCode int `db:"telcode"`
+	}
+
+	p := Place{TelephoneCode: 404}
+	stmt, err := db.Conn.PrepareNamed(`SELECT * FROM place WHERE telcode=:telcode`)
+	rp := []Place{}
+	err = stmt.Select(&rp, p)
+	fmt.Printf("%+v\n", rp)
+
+	return nil
+}
+
+func main() {
+	if err := doit("postgres"); err != nil {
+		fmt.Printf("Something went wrong! %s", err)
 	}
 }
