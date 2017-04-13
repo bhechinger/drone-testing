@@ -7,9 +7,10 @@ pipeline:
     image: golang:1.8
     commands:
       - go get -t -v ./...
+      - go test
       # - go run main.go
-      - go get github.com/mattn/goveralls
-      - goveralls -service=drone.io -repotoken=${REPOTOKEN}
+      # - go get github.com/mattn/goveralls
+      # - goveralls -service=drone.io -repotoken=${REPOTOKEN}
 
 services:
   postgres:
@@ -19,10 +20,18 @@ services:
       - POSTGRES_DB=myapp
       - POSTGRES_PASSWORD=mysecretpassword
   mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=myapp
+      - MYSQL_USER=myapp
+      - MYSQL_PASSWORD=mysecretpassword
+  mysql:
     image: mariadb
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=myapp
       - MYSQL_USER=myapp
       - MYSQL_PASSWORD=mysecretpassword
+      - MYSQL_PORT=9876
 

@@ -41,12 +41,12 @@ func (db *DBInfo) Ping(timeout int) error {
 	}
 }
 
-func doit(driver string) error {
+func doit(driver, DSN string) error {
 	var err error
 	var result sql.Result
 
 	db := DBInfo{}
-	err = db.Init(driver, "user=myapp host=localhost password=mysecretpassword dbname=myapp sslmode=disable")
+	err = db.Init(driver, DSN)
 	if err != nil {
 		return fmt.Errorf("db.Init failed: %s", err)
 	}
