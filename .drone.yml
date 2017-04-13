@@ -4,7 +4,7 @@ workspace:
 
 pipeline:
   build:
-    image: golang:1.8
+    image: golang:${GO_VERSION}
     commands:
       - go get -t -v ./...
       - go test
@@ -13,13 +13,16 @@ pipeline:
       # - goveralls -service=drone.io -repotoken=${REPOTOKEN}
 
 matrix:
+  GO_VERSION:
+    - 1.7
+    - 1.8
   DATABASE:
     - mysql
     - mariadb
     - postgres
 
 services:
-  database:
+  databashttps://drone.aba-eve.com/bhechinger/drone-testing/28e:
     image: ${DATABASE}
     environment:
       - POSTGRES_USER=myapp
