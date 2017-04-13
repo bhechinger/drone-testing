@@ -12,26 +12,25 @@ pipeline:
       # - go get github.com/mattn/goveralls
       # - goveralls -service=drone.io -repotoken=${REPOTOKEN}
 
+matrix:
+  mysql:
+    - mysql
+    - mariadb
+  pgsql:
+    - postgres
+
 services:
   postgres:
-    image: postgres:latest
+    image: ${pgsql}
     environment:
       - POSTGRES_USER=myapp
       - POSTGRES_DB=myapp
       - POSTGRES_PASSWORD=mysecretpassword
   mysql:
-    image: mysql
+    image: ${mysql}
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=myapp
       - MYSQL_USER=myapp
       - MYSQL_PASSWORD=mysecretpassword
-  mariadb:
-    image: mariadb
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=myapp
-      - MYSQL_USER=myapp
-      - MYSQL_PASSWORD=mysecretpassword
-      - MYSQL_PORT=9876
 
