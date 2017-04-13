@@ -19,7 +19,7 @@ matrix:
     - postgres
 
 services:
-  postgres:
+  database:
     image: ${DATABASE}
     environment:
       - POSTGRES_USER=myapp
