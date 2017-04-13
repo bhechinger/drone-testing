@@ -7,18 +7,27 @@ import (
 
 func TestPostgres(t *testing.T) {
 	fmt.Println("Testing PostgreSQL")
-	doit("postgres",
+	err := doit("postgres",
 		"user=myapp host=localhost password=mysecretpassword dbname=myapp sslmode=disable")
+	if err != nil {
+		t.Errorf("PostgreSQL failed: %v", err)
+	}
 }
 
 func TestMysql(t *testing.T) {
 	fmt.Println("Testing MySQL")
-	doit("mysql",
+	err := doit("mysql",
 		"user=myapp host=localhost password=mysecretpassword dbname=myapp sslmode=disable")
+	if err != nil {
+		t.Errorf("MySQL failed: %v", err)
+	}
 }
 
 func TestMariadb(t *testing.T) {
 	fmt.Println("Testing Maria")
-	doit("mysql",
+	err := doit("mysql",
 		"user=myapp host=localhost port=9876 password=mysecretpassword dbname=myapp sslmode=disable")
+	if err != nil {
+		t.Errorf("MariaDB failed: %v", err)
+	}
 }
