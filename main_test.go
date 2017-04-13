@@ -17,7 +17,7 @@ func TestMysql(t *testing.T) {
 		"user=myapp host=localhost password=mysecretpassword dbname=myapp sslmode=disable")
 }
 
-func TestMysql(t *testing.T) {
+func TestMariadb(t *testing.T) {
 	fmt.Println("Testing Maria")
 	doit("mysql",
 		"user=myapp host=localhost port=9876 password=mysecretpassword dbname=myapp sslmode=disable")
